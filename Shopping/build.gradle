@@ -14,6 +14,7 @@ configurations {
 		extendsFrom annotationProcessor
 	}
 }
+
 bootWar {
     archiveBaseName = 'shop'
     archiveFileName = 'shop.war'
