@@ -15,6 +15,12 @@ configurations {
 	}
 }
 
+bootWar {
+    archiveBaseName = 'shop'
+    archiveFileName = 'shop.war'
+    archiveVersion = "0.0.1"
+}
+
 repositories {
 	mavenCentral()
 }

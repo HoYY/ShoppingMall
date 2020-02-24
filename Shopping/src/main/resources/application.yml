@@ -21,3 +21,24 @@ server:
   servlet:
     session:
       timeout: 60m
+      
+# dev
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://13.209.65.208:3306/shop?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: Hoyy1234!
+    initialization-mode: always
+    tomcat:
+      test-while-idle: true
+      time-between-eviction-runs-millis: 3600000
+      min-evictable-idle-time-millis: 7200000
+      test-on-borrow: true
+      validation-query: SELECT 1
+server:
+  servlet:
+    session:
+      timeout: 60m
+      
