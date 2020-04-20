@@ -7,6 +7,7 @@ spring:
 spring:
   profiles: local
   datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/shop?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
     username: root
     password: 12341234
@@ -17,11 +18,16 @@ spring:
       min-evictable-idle-time-millis: 7200000
       test-on-borrow: true
       validation-query: SELECT 1
+  devtools:
+    livereload:
+      enabled: true
 server:
   servlet:
     session:
       timeout: 60m
-
+mybatis:
+  type-aliases-package: com.hoyy.shop.dao
+  mapper-locations: mybatis/mappers/*.xml
 
 # dev
 ---
