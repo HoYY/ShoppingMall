@@ -12,6 +12,3 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowedOrigins("http://127.0.0.1:3000", "http://localhost:3000");
     }
 }
-
-//jenkins test
-//feture branch

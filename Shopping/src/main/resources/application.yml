@@ -28,6 +28,9 @@ server:
 mybatis:
   type-aliases-package: com.hoyy.shop.dao
   mapper-locations: mybatis/mappers/*.xml
+jwt:
+  jwtSecret: sadd
+  jwtExpirationInMs: sdf
 
 # dev
 ---
