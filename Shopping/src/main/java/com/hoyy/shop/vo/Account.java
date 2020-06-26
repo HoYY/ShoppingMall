@@ -37,5 +37,14 @@ public class Account {
 	@ManyToMany(cascade=CascadeType.PERSIST)
 	@JoinTable(name="user_roles", joinColumns= {@JoinColumn(name="email")},
 			inverseJoinColumns = {@JoinColumn(name="role_name")})
-	private Set<Role> roles = new HashSet<>();
+	private Set<Role> authorities = new HashSet<>();
+	
+	public Account() {}
+	
+	public Account(String email, String password, String name, String phone) {
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.phone = phone;
+	}
 }

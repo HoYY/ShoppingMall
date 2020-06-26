@@ -4,4 +4,6 @@ import com.hoyy.shop.vo.Account;
 
 public interface AccountService {
 	public Account findOneByEmail(String email);
+	
+	public boolean save(Account account);
 }

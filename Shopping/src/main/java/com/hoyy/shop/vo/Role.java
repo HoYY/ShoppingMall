@@ -20,7 +20,7 @@ public class Role {
 	@NotNull
 	@Column(length=50)
 	private RoleName name;
-
+	
 	public enum RoleName {
 		ROLE_ADMIN,
 		ROLE_CLIENT,

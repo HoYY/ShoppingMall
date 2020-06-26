@@ -8,5 +8,7 @@ import com.hoyy.shop.vo.Account;
 @Repository
 @Mapper
 public interface AccountDao {
-	Account findOneByEmail(String email) throws Exception;
+	Account findOneByEmail(String email);
+	
+	void save(Account account) throws Exception;
 }

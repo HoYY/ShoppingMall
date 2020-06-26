@@ -1,0 +1,1 @@
+insert ignore into roles values("ROLE_ADMIN"), ("ROLE_CLIENT"), ("ROLE_SELLER");

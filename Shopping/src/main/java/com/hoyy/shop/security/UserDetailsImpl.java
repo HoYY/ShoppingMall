@@ -30,8 +30,8 @@ public class UserDetailsImpl implements UserDetails {
 		this.authorities = authorities;
 	}
 	
-	public UserDetailsImpl create(Account account) {
-		Set<GrantedAuthority> authorities = account.getRoles().stream()
+	public static UserDetailsImpl create(Account account) {
+		Set<GrantedAuthority> authorities = account.getAuthorities().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName().name()))
 				.collect(Collectors.toSet());
 		return new UserDetailsImpl(account.getEmail(), account.getPassword(), 

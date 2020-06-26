@@ -6,4 +6,7 @@
     	select * from users where email = #{email}
     </select>
        
+    <insert id="save" parameterType="com.hoyy.shop.vo.Account">
+    	insert into users(email, password, name, phone) values(#{email}, #{password}, #{name}, #{phone})
+    </insert>
 </mapper>
