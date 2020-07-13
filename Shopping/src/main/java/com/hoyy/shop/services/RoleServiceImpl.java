@@ -1,6 +1,6 @@
 package com.hoyy.shop.services;
 
-import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,11 @@ public class RoleServiceImpl implements RoleService {
 	@Autowired
 	private RoleDao roleDao;
 	
-	public Optional<Role> findOneByName(RoleName name) {
+	public Set<Role> findOneByName(RoleName name) {
 		return roleDao.findOneByName(name);
+	}
+	
+	public void initializeRole() {
+		roleDao.initializeRole();
 	}
 }

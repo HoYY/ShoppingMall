@@ -6,11 +6,6 @@ spring:
 ---
 spring:
   profiles: local
-  jpa:
-    database: mysql
-    show-sql: true
-    hibernate:
-      ddl-auto: update
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/shop?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
@@ -31,13 +26,12 @@ server:
     session:
       timeout: 60m
 mybatis:
-  type-aliases-package: com.hoyy.shop.dao
+  type-aliases-package: com.hoyy.shop.vo
   mapper-locations: mybatis/mappers/*.xml
 jwt:
   jwtSecret: JwtHoYYSecretKey
   jwtExpirationInMs: 864000000
-  jwtHeaderName: Authorization
-  jwtTokenPrefix: Bearer
+  jwtTokenPrefix: "Bearer "
 
 # dev
 ---

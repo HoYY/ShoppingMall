@@ -1,6 +1,10 @@
 package com.hoyy.shop.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.hoyy.shop.vo.Account;
@@ -8,7 +12,7 @@ import com.hoyy.shop.vo.Account;
 @Repository
 @Mapper
 public interface AccountDao {
-	Account findOneByEmail(String email);
+	List<Map<String, String>> findJoinUserRolesByEmail(@Param("email") String email);
 	
-	void save(Account account) throws Exception;
+	int save(Account account) throws Exception;
 }

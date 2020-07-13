@@ -1,10 +1,8 @@
 package com.hoyy.shop.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class ApiResponse {
 	private Boolean success;
     private String message;

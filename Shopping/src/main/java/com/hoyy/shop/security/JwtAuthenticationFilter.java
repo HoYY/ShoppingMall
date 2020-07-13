@@ -1,7 +1,6 @@
 package com.hoyy.shop.security;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -10,16 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hoyy.shop.dto.LoginDto;
 
@@ -31,18 +26,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	
 	private final AuthenticationManager authenticationManager;
 	
-	@Value("${jwt.jwtSecret}")
-	private String jwtSecret;
+	private final JwtTokenProvider jwtTokenProvider;
 	
-	@Value("${jwt.jwtExpirationInMs}")
-	private int jwtExpirationInMs;
-	
-	@Value("${jwt.jwtHeaderName}")
-	private String jwtHeaderName;
-	
-	@Value("${jwt.jwtTokenPrefix}")
-	private String jwtTokenPrefix;
-	
+	private final String jwtHeaderName = "Authorization";
+		
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, 
 			HttpServletResponse response) throws AuthenticationException {
@@ -54,11 +41,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		catch(IOException e) {
 			log.error(e);
 		}
-		
-		UsernamePasswordAuthenticationToken authenticaitonToken = 
+		UsernamePasswordAuthenticationToken authenticationToken = 
 				new UsernamePasswordAuthenticationToken(
 						loginDto.getUsername(), loginDto.getPassword());
-		Authentication auth = authenticationManager.authenticate(authenticaitonToken);
+		Authentication auth = authenticationManager.authenticate(authenticationToken);
 		
 		return auth;
 	}
@@ -67,16 +53,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void successfulAuthentication(HttpServletRequest request, 
 			HttpServletResponse response, FilterChain chain, 
 			Authentication authentication) throws IOException, ServletException {
-		UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
 		
-		Date now = new Date();
-		Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
-		
-		String token = JWT.create()
-				.withSubject(userDetailsImpl.getUsername())
-				.withExpiresAt(expiryDate)
-				.sign(Algorithm.HMAC512(jwtSecret));
-		
-		response.addHeader(jwtHeaderName, jwtTokenPrefix + " " + token);
+		response.addHeader(jwtHeaderName, 
+				jwtTokenProvider.generateToken(authentication));
 	}
 }

@@ -16,6 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.hoyy.shop.security.JwtAuthenticationEntryPoint;
 import com.hoyy.shop.security.JwtAuthenticationFilter;
+import com.hoyy.shop.security.JwtAuthorizationFilter;
+import com.hoyy.shop.security.JwtTokenProvider;
+import com.hoyy.shop.services.AccountService;
 
 @Configuration
 @EnableWebSecurity
@@ -26,11 +29,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JwtAuthenticationEntryPoint unauthorizedHandler;
 	
-	@Bean(BeanIds.AUTHENTICATION_MANAGER)
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
+	
+	@Autowired
+	private AccountService accountServiceImpl;
+	
+/*	@Bean(BeanIds.AUTHENTICATION_MANAGER)
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
-	}
+	}*/
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -43,9 +52,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
-			.addFilter(new JwtAuthenticationFilter(authenticationManager()))
+			.addFilter(new JwtAuthenticationFilter(authenticationManager(),
+					jwtTokenProvider))
+			.addFilter(new JwtAuthorizationFilter(authenticationManager(),
+					jwtTokenProvider, accountServiceImpl))
 			.authorizeRequests()
-				.antMatchers("/","/login", "/signup")
+				.antMatchers("/login", "/signup")
 				.permitAll()
 				.anyRequest()
 				.authenticated();
